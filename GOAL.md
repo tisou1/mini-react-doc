@@ -58,4 +58,11 @@ StrictMode 可以作为透传容器使用，暂不模拟开发期双执行。
 - 原理：组件通过 __updater 提交请求；部分 state 合并、回调与生命周期由 renderer 实现。
 - 验证：实际执行对应文件的 `node --check` 与 ESM import；核心 API smoke check 通过。DOM 行为暂以原理实现和后续内存 DOM smoke 验证为准，未运行浏览器检查。
 - 提交：`feat: add Component and PureComponent update APIs`（jj）。
+
+### 05 · Context 对象
+
+- 完成 API/功能：createContext、Context.Provider、Context.Consumer，React 19 风格的 Context 直接 Provider。
+- 原理：默认值保存为 _defaultValue；每个 Fiber 持有自己的 Context Map，避免跨根污染。
+- 验证：实际执行对应文件的 `node --check` 与 ESM import；核心 API smoke check 通过。DOM 行为暂以原理实现和后续内存 DOM smoke 验证为准，未运行浏览器检查。
+- 提交：`feat: add Context provider and consumer types`（jj）。
 <!-- completion-records -->
