@@ -156,4 +156,11 @@ StrictMode 可以作为透传容器使用，暂不模拟开发期双执行。
 - 原理：支持 classic React.createElement 与 named API 用法；package exports 提供 mini-react、两个 JSX runtime、react-dom 与 react-dom/client 五个入口。StrictMode 不执行开发期双调用。
 - 验证：实际 `pnpm check` 通过（29 个 JS 文件语法、5 个公共入口导入）。核心 renderer/Portal/Suspense 已通过一次性内存 DOM smoke；transition 的精确并发语义不属于验证或兼容承诺。
 - 提交：`feat: expose React-compatible public entry points`（jj）。
+
+### 19 · 零依赖运行工具与 pnpm 锁文件
+
+- 完成 API/功能：dev server、check 命令、固定 pnpm@11.27.0、pnpm-lock.yaml。
+- 原理：开发服务器直接提供 ESM/HTML/CSS，默认 127.0.0.1:5173，可用 PORT 调整；无需构建。check 仅检查语法和入口。pnpm 网络与缓存访问在沙箱内受限，已在沙箱外直接运行成功，未安装项目运行时依赖。
+- 验证：实际通过 pnpm install --lockfile-only --offline、pnpm check；本机 HTTP smoke 确认首页与源码返回正确状态/MIME，服务随后关闭。
+- 提交：`chore: add zero-dependency development and validation tools`（jj）。
 <!-- completion-records -->
