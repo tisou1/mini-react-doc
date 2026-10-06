@@ -9,17 +9,17 @@
 
 - [x] 建立零运行时依赖的 ESM 项目与 Git 兼容的 jj 仓库。
 - [x] 添加 AGENTS.md，规定模块边界、验证方式、记录与提交流程。
-- [ ] Element：createElement、cloneElement、isValidElement、Children、Fragment、JSX runtimes。
-- [ ] 组件模型：createRef、forwardRef、memo、createContext、Provider、Consumer、Component、PureComponent。
-- [ ] 渲染：createRoot、root.render、root.unmount，函数组件、文本、数组和 DOM 属性/事件。
-- [ ] 协调与调度：Fiber、type/key 复用、插入/移动/删除、批量状态更新、render/commit 分离。
-- [ ] 状态 Hooks：useState、useReducer、useRef。
-- [ ] 记忆 Hooks：useMemo、useCallback。
-- [ ] Effects：useEffect、useLayoutEffect、useImperativeHandle 与卸载清理。
-- [ ] 其他 Hooks：useContext、useId、useSyncExternalStore、useDebugValue。
-- [ ] 扩展：createPortal、flushSync、lazy、Suspense，以及简化的 transition/deferred 调度。
-- [ ] 文档：API 兼容性表、架构阅读路线、学习示例和启动说明。
-- [ ] 完成最小语法/入口与核心流程验证，所有功能记录并通过 jj 提交。
+- [x] Element：createElement、cloneElement、isValidElement、Children、Fragment、JSX runtimes。
+- [x] 组件模型：createRef、forwardRef、memo、createContext、Provider、Consumer、Component、PureComponent。
+- [x] 渲染：createRoot、root.render、root.unmount，函数组件、文本、数组和 DOM 属性/事件。
+- [x] 协调与调度：Fiber、type/key 复用、插入/移动/删除、批量状态更新、render/commit 分离。
+- [x] 状态 Hooks：useState、useReducer、useRef。
+- [x] 记忆 Hooks：useMemo、useCallback。
+- [x] Effects：useEffect、useLayoutEffect、useImperativeHandle 与卸载清理。
+- [x] 其他 Hooks：useContext、useId、useSyncExternalStore、useDebugValue。
+- [x] 扩展：createPortal、flushSync、lazy、Suspense，以及简化的 transition/deferred 调度。
+- [x] 文档：API 兼容性表、架构阅读路线、学习示例和启动说明。
+- [x] 完成最小语法/入口与核心流程验证，所有功能记录并通过 jj 提交。
 
 ## 有意暂缓
 
@@ -35,7 +35,7 @@ StrictMode 可以作为透传容器使用，暂不模拟开发期双执行。
 - 完成：ESM package exports 与 dev/check 命令定义、.gitignore、.gitattributes、AGENTS.md、目标文件。
 - 版本控制：使用 `jj git init --colocate .` 初始化共置仓库；所有后续逻辑功能通过 jj 提交并移动 main bookmark。
 - 验证：目录原先为空；确认 Node 可用、jj 在沙箱外可运行，jj/Git 共置初始化成功。
-- 说明：当前 pnpm 命令是环境提供的 Corepack shim，且网络查询失败；零依赖项目提供等价 Node 命令，无需安装依赖。
+- 说明：初次沙箱内的 pnpm 命令受环境 shim 与网络限制影响；后续已直接运行 pnpm 成功并固定版本，见记录 19。零依赖项目也提供等价 Node 命令。
 
 
 ### 02 · Element 与 children 工具
@@ -177,4 +177,13 @@ StrictMode 可以作为透传容器使用，暂不模拟开发期双执行。
 - 原理：逐项注明无 SyntheticEvent、SSR/hydration、ErrorBoundary、StrictMode 双执行、eager state bailout 和完整 Lanes；解释 Suspense primary 卸载与简化 pending/deferred。
 - 验证：已核对 39 个本地文档链接存在、代码围栏配对、包管理器版本及当前源码行为。
 - 提交：`docs: explain architecture API compatibility and learning path`（jj）。
-<!-- completion-records -->
+### 22 · 本轮验收完成（2026-10-06）
+
+- 本轮目标：上述验收范围全部完成，暂缓项维持明确记录；源码不依赖 React 或其他运行时包。
+- 最小检查：`node scripts/check.js` 与 `pnpm check` 实际通过，覆盖 29 个 JavaScript 文件语法和 5 个公共入口导入。
+- 核心流程：一次性内存 DOM smoke 共 13 组场景通过，覆盖根渲染/卸载、functional batching、Effect/layout 清理、key 重排与组件身份、Context/memo、imperative refs、类生命周期/snapshot、lazy/Suspense、Portal、external store、稳定 ID、transition 和 deferred。
+- 运行工具：开发服务器实际启动成功，本机 HTTP 检查确认 HTML 和 ESM 资源可加载，检查后关闭服务。
+- 文档：39 个本地链接存在，代码围栏与 package manager 版本一致；README 对每个简化 API 说明限制。
+- 版本控制：所有逻辑功能提交均使用 jj，每个提交包含 GOAL.md；main bookmark 与 Git 共用历史，未 push 或重写已完成提交。
+- 验证边界：没有建立测试套件、执行全量构建、E2E、浏览器行为或视觉验证；内存 DOM 不能覆盖真实浏览器的全部表单与事件差异。
+- 提交：`docs: record completed mini-react goal and verification`（jj）。
