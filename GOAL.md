@@ -135,4 +135,11 @@ StrictMode 可以作为透传容器使用，暂不模拟开发期双执行。
 - 原理：child/sibling/parent 支持可暂停遍历；alternate 连接上一棵树。5ms 时间预算让出主线程，更新版本变化时重算。commit 分离 snapshot、DOM mutation、状态发布、refs/layout 和 passive；lazy Promise 触发 fallback/retry。
 - 验证：实际 `pnpm check` 通过（29 个 JS 文件语法、5 个公共入口导入）。核心 renderer/Portal/Suspense 已通过一次性内存 DOM smoke；transition 的精确并发语义不属于验证或兼容承诺。
 - 提交：`feat: implement Fiber rendering reconciliation and commits`（jj）。
+
+### 16 · 简化 transition 与 deferred Hooks
+
+- 完成 API/功能：startTransition、useTransition、useDeferredValue。
+- 原理：scope 同步执行，调度请求用 timer 延后；pending 通过任务计数和 Promise 模拟，deferred 取消旧 timer。明确不提供 Lanes 或同一根中严格的优先级隔离。
+- 验证：实际 `pnpm check` 通过（29 个 JS 文件语法、5 个公共入口导入）。核心 renderer/Portal/Suspense 已通过一次性内存 DOM smoke；transition 的精确并发语义不属于验证或兼容承诺。
+- 提交：`feat: add simplified transitions and deferred values`（jj）。
 <!-- completion-records -->
