@@ -100,4 +100,11 @@ StrictMode 可以作为透传容器使用，暂不模拟开发期双执行。
 - 原理：用 Object.is 比较依赖，缓存值或函数；没有 deps 时每轮重新计算。
 - 验证：实际通过 Hooks ESM import 和 `node scripts/check.js` 的语法/入口检查；相关 state、Effect、Context、ref 流程也通过一次性内存 DOM smoke，未建立测试套件。
 - 提交：`feat: add useMemo and useCallback dependency caching`（jj）。
+
+### 11 · Effects 与 imperative handle
+
+- 完成 API/功能：useEffect、useLayoutEffect、useImperativeHandle；runEffects、cleanupHooks。
+- 原理：render 只登记 create/deps；layout 在 DOM/ref 提交后执行，passive 异步执行；依赖变化与卸载先清理旧 Effect；handle 包含 ref 的依赖。
+- 验证：实际通过 Hooks ESM import 和 `node scripts/check.js` 的语法/入口检查；相关 state、Effect、Context、ref 流程也通过一次性内存 DOM smoke，未建立测试套件。
+- 提交：`feat: add effect lifecycle and imperative handles`（jj）。
 <!-- completion-records -->
