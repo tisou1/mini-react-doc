@@ -65,4 +65,11 @@ StrictMode 可以作为透传容器使用，暂不模拟开发期双执行。
 - 原理：默认值保存为 _defaultValue；每个 Fiber 持有自己的 Context Map，避免跨根污染。
 - 验证：实际执行对应文件的 `node --check` 与 ESM import；核心 API smoke check 通过。DOM 行为暂以原理实现和后续内存 DOM smoke 验证为准，未运行浏览器检查。
 - 提交：`feat: add Context provider and consumer types`（jj）。
+
+### 06 · 组件包装器与 lazy 状态机
+
+- 完成 API/功能：memo、forwardRef、lazy。
+- 原理：memo 保存比较器，forwardRef 保存 render；lazy 缓存加载 Promise、模块和错误，readLazy 为 Suspense 提供挂起信号。
+- 验证：实际执行对应文件的 `node --check` 与 ESM import；核心 API smoke check 通过。DOM 行为暂以原理实现和后续内存 DOM smoke 验证为准，未运行浏览器检查。
+- 提交：`feat: add memo forwardRef and lazy wrappers`（jj）。
 <!-- completion-records -->
