@@ -149,4 +149,11 @@ StrictMode 可以作为透传容器使用，暂不模拟开发期双执行。
 - 原理：Portal 改变 host 容器但保留 Fiber/Context 父链，卸载保留外来节点；flushSync 同步处理调度器里已排队的根。事件仍沿真实 DOM 冒泡。
 - 验证：实际 `pnpm check` 通过（29 个 JS 文件语法、5 个公共入口导入）。核心 renderer/Portal/Suspense 已通过一次性内存 DOM smoke；transition 的精确并发语义不属于验证或兼容承诺。
 - 提交：`feat: expose portals and synchronous flushing`（jj）。
+
+### 18 · 统一 React 公共入口
+
+- 完成 API/功能：全部上述 React API 的 named/default exports、StrictMode 透传、Suspense、version。
+- 原理：支持 classic React.createElement 与 named API 用法；package exports 提供 mini-react、两个 JSX runtime、react-dom 与 react-dom/client 五个入口。StrictMode 不执行开发期双调用。
+- 验证：实际 `pnpm check` 通过（29 个 JS 文件语法、5 个公共入口导入）。核心 renderer/Portal/Suspense 已通过一次性内存 DOM smoke；transition 的精确并发语义不属于验证或兼容承诺。
+- 提交：`feat: expose React-compatible public entry points`（jj）。
 <!-- completion-records -->
