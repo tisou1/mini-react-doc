@@ -86,4 +86,11 @@ StrictMode 可以作为透传容器使用，暂不模拟开发期双执行。
 - 原理：按调用顺序克隆 Hooks 快照，render 读取共享队列，commitHooks 才消费；卸载后的 dispatch 忽略，明确拒绝未实现的 render-phase state updates。
 - 验证：实际通过 Hooks ESM import 和 `node scripts/check.js` 的语法/入口检查；相关 state、Effect、Context、ref 流程也通过一次性内存 DOM smoke，未建立测试套件。
 - 提交：`feat: implement state and reducer hook queues`（jj）。
+
+### 09 · 引用 Hook
+
+- 完成 API/功能：useRef。
+- 原理：跨 render 保持同一 ref 对象；修改 current 不会触发重新调度。
+- 验证：实际通过 Hooks ESM import 和 `node scripts/check.js` 的语法/入口检查；相关 state、Effect、Context、ref 流程也通过一次性内存 DOM smoke，未建立测试套件。
+- 提交：`feat: add useRef with stable object identity`（jj）。
 <!-- completion-records -->
