@@ -44,4 +44,11 @@ StrictMode 可以作为透传容器使用，暂不模拟开发期双执行。
 - 原理：保留单个与多个 children 的原始形状，分离 key 与 props，ref 采用 props.ref；Children 组合 key 且保持 Element 边界。
 - 验证：实际执行对应文件的 `node --check` 与 ESM import；核心 API smoke check 通过。DOM 行为暂以原理实现和后续内存 DOM smoke 验证为准，未运行浏览器检查。
 - 提交：`feat: add elements fragments refs and Children APIs`（jj）。
+
+### 03 · JSX runtimes
+
+- 完成 API/功能：jsx、jsxs、jsxDEV，两个 runtime 入口的 Fragment。
+- 原理：同时支持自动 JSX runtime 与开发 runtime，输出统一 Element；本仓库不内置 JSX 转译器。
+- 验证：实际执行对应文件的 `node --check` 与 ESM import；核心 API smoke check 通过。DOM 行为暂以原理实现和后续内存 DOM smoke 验证为准，未运行浏览器检查。
+- 提交：`feat: add automatic JSX runtimes`（jj）。
 <!-- completion-records -->
