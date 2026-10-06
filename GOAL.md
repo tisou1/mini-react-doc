@@ -128,4 +128,11 @@ StrictMode 可以作为透传容器使用，暂不模拟开发期双执行。
 - 原理：读取 snapshot，通过 layout Effects 建立/清理订阅，检查 render 到 commit 以及首次订阅期间的变化；getServerSnapshot 保留参数，当前不实现 SSR。
 - 验证：实际 `pnpm check` 通过（29 个 JS 文件语法、5 个公共入口导入）。核心 renderer/Portal/Suspense 已通过一次性内存 DOM smoke；transition 的精确并发语义不属于验证或兼容承诺。
 - 提交：`feat: add useSyncExternalStore subscription lifecycle`（jj）。
+
+### 15 · Fiber 协调与客户端渲染
+
+- 完成 API/功能：createRoot、root.render、root.unmount；函数/类组件、type/key 匹配、插入/移动/删除、自动 batching、分片 render、commit 和 Suspense。
+- 原理：child/sibling/parent 支持可暂停遍历；alternate 连接上一棵树。5ms 时间预算让出主线程，更新版本变化时重算。commit 分离 snapshot、DOM mutation、状态发布、refs/layout 和 passive；lazy Promise 触发 fallback/retry。
+- 验证：实际 `pnpm check` 通过（29 个 JS 文件语法、5 个公共入口导入）。核心 renderer/Portal/Suspense 已通过一次性内存 DOM smoke；transition 的精确并发语义不属于验证或兼容承诺。
+- 提交：`feat: implement Fiber rendering reconciliation and commits`（jj）。
 <!-- completion-records -->
