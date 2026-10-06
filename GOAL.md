@@ -114,4 +114,11 @@ StrictMode 可以作为透传容器使用，暂不模拟开发期双执行。
 - 原理：读取最近 Fiber Context Map 或默认值，并登记读取依赖，使 Context 更新能穿过 memo。
 - 验证：实际通过 Hooks ESM import 和 `node scripts/check.js` 的语法/入口检查；相关 state、Effect、Context、ref 流程也通过一次性内存 DOM smoke，未建立测试套件。
 - 提交：`feat: add useContext and context dependency tracking`（jj）。
+
+### 13 · ID 与调试接口
+
+- 完成 API/功能：useId、useDebugValue。
+- 原理：useId 在挂载后保持稳定、使用根 ID/counter/identifierPrefix 区分；无 SSR ID 算法。useDebugValue 为无 DevTools 的明确 no-op。
+- 验证：实际通过 Hooks ESM import 和 `node scripts/check.js` 的语法/入口检查；相关 state、Effect、Context、ref 流程也通过一次性内存 DOM smoke，未建立测试套件。
+- 提交：`feat: add useId and debug hook API`（jj）。
 <!-- completion-records -->
