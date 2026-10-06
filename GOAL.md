@@ -121,4 +121,11 @@ StrictMode 可以作为透传容器使用，暂不模拟开发期双执行。
 - 原理：useId 在挂载后保持稳定、使用根 ID/counter/identifierPrefix 区分；无 SSR ID 算法。useDebugValue 为无 DevTools 的明确 no-op。
 - 验证：实际通过 Hooks ESM import 和 `node scripts/check.js` 的语法/入口检查；相关 state、Effect、Context、ref 流程也通过一次性内存 DOM smoke，未建立测试套件。
 - 提交：`feat: add useId and debug hook API`（jj）。
+
+### 14 · 外部 store Hook
+
+- 完成 API/功能：useSyncExternalStore。
+- 原理：读取 snapshot，通过 layout Effects 建立/清理订阅，检查 render 到 commit 以及首次订阅期间的变化；getServerSnapshot 保留参数，当前不实现 SSR。
+- 验证：实际 `pnpm check` 通过（29 个 JS 文件语法、5 个公共入口导入）。核心 renderer/Portal/Suspense 已通过一次性内存 DOM smoke；transition 的精确并发语义不属于验证或兼容承诺。
+- 提交：`feat: add useSyncExternalStore subscription lifecycle`（jj）。
 <!-- completion-records -->
