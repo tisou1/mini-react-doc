@@ -16,7 +16,14 @@
     "./react-dom/client": "./src/react-dom/client.js"
   },
   "scripts": {
-    "dev": "node scripts/dev-server.js",
+    "dev": "vitepress dev docs",
+    "dev:examples": "node scripts/dev-server.js",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs",
     "check": "node scripts/check.js"
+  },
+  "devDependencies": {
+    "vitepress": "1.6.4",
+    "vue": "3.5.43"
   }
 }

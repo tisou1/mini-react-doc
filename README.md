@@ -6,19 +6,35 @@
 
 ## 运行
 
-需要 Node.js 22 或更高版本。仓库使用 `pnpm@11.27.0`，零依赖源码与示例无需先安装依赖。
+需要 Node.js 22 或更高版本。仓库使用 `pnpm@11.27.0`。mini-react 核心仍没有运行时依赖；VitePress 与 Vue 是文档开发依赖，首次运行先安装：
+
+```sh
+pnpm install
+```
 
 ```sh
 pnpm dev
 ```
 
-也可以直接执行：
+`pnpm dev` 启动 VitePress 原理文档站，提供完整讲解、源码浏览、本地搜索和交互实验。默认端口 5173，被占用时依次尝试 5174、5175；设置 `PORT` 可改变起始端口，访问地址以终端输出为准。
+
+也可以单独启动原生 ESM 示例：
 
 ```sh
-node scripts/dev-server.js
+pnpm dev:examples
+# 无需文档依赖时也可直接运行 node scripts/dev-server.js
 ```
 
-默认打开 [http://localhost:5173](http://localhost:5173)；如果端口被占用，会依次尝试 5174、5175 等端口，访问地址以终端输出为准。设置 `PORT` 时，以该端口为起点递增。浏览器示例入口是 [examples/index.html](examples/index.html)。请通过开发服务器访问，浏览器 ESM 不适合直接双击 HTML 文件启动。
+文档中的“交互实验”直接运行 [examples/index.html](examples/index.html)，无需第二个服务。请通过开发服务器访问，浏览器 ESM 不适合直接双击 HTML 文件启动。
+
+完整的 Markdown 原理教材是 [docs/principles.md](docs/principles.md)，可在文件中阅读，也会展示为文档网页。简要架构与断点见 [docs/architecture.md](docs/architecture.md)。源码已增加中文职责、状态流转和关键设计理由注释。
+
+文档静态构建与预览：
+
+```sh
+pnpm docs:build
+pnpm docs:preview
+```
 
 最小检查命令：
 
@@ -98,6 +114,7 @@ Node.js 可以导入 API、观察 Element 等纯 JavaScript 对象；`createRoot
 
 ## API 与兼容范围
 
+<!-- #region api -->
 以下 API 已提供，表中的限制是当前实现契约。
 
 | API / 能力 | 当前行为与简化 |
@@ -124,6 +141,7 @@ Node.js 可以导入 API、观察 Element 等纯 JavaScript 对象；`createRoot
 | `startTransition`、`useTransition`、`useDeferredValue` | `startTransition` 立即执行 scope，只延后其中调度请求；`useTransition` 以 timer/Promise 模拟 pending；`useDeferredValue` 延后一轮任务更新。没有 Lanes，同一 root 的普通更新与 transition 重叠时不能区分优先级。异步 scope 的 await 后更新也不会自动保留 transition 标记。 |
 | `StrictMode` | 当前作为透传容器；不模拟开发期 render/Effect/ref 双执行。 |
 | DOM 属性与事件 | 支持常见属性、style、HTML/SVG、表单字段和 `dangerouslySetInnerHTML`；直接注册原生 Event，不实现 SyntheticEvent 或完整事件委托。复杂 DOM 兼容性仍需单独验证。 |
+<!-- #endregion api -->
 
 ## 学习路线
 
@@ -138,7 +156,9 @@ Node.js 可以导入 API、观察 Element 等纯 JavaScript 对象；`createRoot
 
 ## 暂缓项
 
+<!-- #region limitations -->
 SSR、`hydrateRoot` / hydration、Server Components、React Compiler、React 19 Actions（包括 `useActionState`、`useOptimistic`、`useFormStatus`）、`use(promise)`、ErrorBoundary、SyntheticEvent、完整 DevTools、StrictMode 开发期双执行、精确并发 Lanes、eager `Object.is` state bailout、完整测试套件与边缘兼容诊断均不在当前范围。
+<!-- #endregion limitations -->
 
 ## 记录与提交
 

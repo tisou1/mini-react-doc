@@ -17,6 +17,9 @@
 - Hooks 按调用顺序保存；状态队列在 commit 后消费；Effects 更新前和卸载时必须清理。
 - 协调使用 type 与 key 匹配身份，不能为列表更新重新创建全部 DOM。
 - 保持模块无运行时依赖。需要包管理器时直接使用 `pnpm`，不切换锁文件、不默认使用 Corepack 包装命令。
+- 文档站使用 VitePress 与 Vue 开发依赖，核心 mini-react 不依赖它们；`pnpm dev` 启动原理文档，`pnpm dev:examples` 单独启动示例。
+- 源码注释解释职责、关键字段、调用顺序和设计理由，避免逐行翻译；实现改变时同步更新 `docs/principles.md`，并注明与 React 的简化差异。
+- `docs/source.md` 通过 VitePress snippet 引入真实源码，不能手工维护另一份实现；交互示例资源与原生 ESM 服务器共用。
 
 ## 验证
 
@@ -24,6 +27,7 @@
 - 必要时做针对性的 Node smoke check 或人工操作示例；不默认添加测试框架、全量构建、E2E 或浏览器视觉测试。
 - 对完成 API 做最小有意义的验证，记录实际执行的检查；不能将未运行的检查写成通过。
 - 测试套件、复杂边界检查、生产级兼容性暂不作为本轮目标。
+- 文档站增加路由、snippet 或 Vue 组件时，按需用 `pnpm docs:build` 确认 Markdown、链接和 SSG 能编译；普通文字/注释修改优先针对性检查。
 
 ## 目标记录与版本控制
 

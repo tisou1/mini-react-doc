@@ -202,6 +202,7 @@ StrictMode 可以作为透传容器使用，暂不模拟开发期双执行。
 - [x] 提供可离线阅读的完整 Markdown 原理教材，覆盖真实代码链路、手算示例和简化边界。
 - [x] `pnpm dev` 启动 VitePress，展示原理、注释源码、API 对照和同地址交互实验；保留端口自动递增。
 - [x] 使用针对性语法、文档编译及本机 HTTP 检查，并按功能 jj 提交。
+- [ ] 补充现代 React Fiber 专题，重点对照双缓冲、工作循环、Lanes、更新重放与本项目的简化。
 
 ### 24 · 系统化源码注释
 
@@ -217,3 +218,11 @@ StrictMode 可以作为透传容器使用，暂不模拟开发期双执行。
 - 精度：区分真实 React 与本项目；明确 useContext/useDebugValue 不消耗当前 Hook 数组槽位、layout 在 commit 内执行、callback ref 优先 cleanup、fallback 不保留 primary 树及无 Lanes。
 - 验证：17 组代码围栏配对、10 个 JS 示例语法、24 个源码路径、5 个站内链接/锚点检查通过；完成与当前实现的只读交叉审查，VitePress 编译与本机模块请求通过。
 - 提交：`docs: add complete mini-react principles walkthrough`（jj）。
+
+### 26 · VitePress 原理文档站
+
+- 完成：`pnpm dev` 启动 VitePress，提供阅读导航、完整原理、注释源码、API 对照、本地搜索和同地址交互实验；`pnpm dev:examples` 保留独立原生 ESM 示例服务。
+- 原理：源码页面用 snippet 引入实际文件，API 页引用 README；Vue 只用于文档中的更新过程推演，mini-react 实验在独立 iframe 中运行。两种开发服务共用原生示例资源处理，静态构建复制示例和源码。
+- 启动：默认 5173，`strictPort: false` 在占用时自动递增；支持 PORT 指定起始端口。VitePress 与 Vue 是固定版本开发依赖，按 pnpm 官方方式允许 esbuild 构建。
+- 验证：实际 `pnpm check` 通过（32 个 JS 文件语法、5 个公共入口导入）；`pnpm docs:build` 成功完成 Markdown、snippet、链接及 SSG 编译。本机 HTTP 检查覆盖 9 个页面模块/原生资源请求；实际 `pnpm dev` 遇到 5173/5174 占用后启动在 5175，独立示例服务首页和 ESM 资源的另外 2 项请求也通过，验证服务均已关闭。未执行浏览器行为、视觉或 E2E 检查。
+- 提交：`feat: serve React principles and examples with VitePress`（jj）。此前自动审批的额度限制已解除，按原授权继续提交。

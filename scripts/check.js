@@ -9,14 +9,16 @@ async function javascriptFiles(directory) {
   const files = [];
   for (const entry of await readdir(directory, { withFileTypes: true })) {
     const path = join(directory, entry.name);
-    if (entry.isDirectory()) files.push(...await javascriptFiles(path));
+    if (entry.isDirectory() && !['cache', 'dist', 'node_modules'].includes(entry.name)) {
+      files.push(...await javascriptFiles(path));
+    }
     else if (entry.name.endsWith('.js')) files.push(path);
   }
   return files;
 }
 
 const files = (await Promise.all(
-  ['src', 'scripts', 'examples'].map(directory => javascriptFiles(join(projectRoot, directory))),
+  ['src', 'scripts', 'examples', 'docs/.vitepress'].map(directory => javascriptFiles(join(projectRoot, directory))),
 )).flat().sort();
 for (const file of files) {
   const result = spawnSync(process.execPath, ['--check', file], { encoding: 'utf8' });
