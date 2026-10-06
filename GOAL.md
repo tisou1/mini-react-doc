@@ -51,4 +51,11 @@ StrictMode 可以作为透传容器使用，暂不模拟开发期双执行。
 - 原理：同时支持自动 JSX runtime 与开发 runtime，输出统一 Element；本仓库不内置 JSX 转译器。
 - 验证：实际执行对应文件的 `node --check` 与 ESM import；核心 API smoke check 通过。DOM 行为暂以原理实现和后续内存 DOM smoke 验证为准，未运行浏览器检查。
 - 提交：`feat: add automatic JSX runtimes`（jj）。
+
+### 04 · 类组件基础
+
+- 完成 API/功能：Component、PureComponent、setState、forceUpdate，Object.is 浅比较工具。
+- 原理：组件通过 __updater 提交请求；部分 state 合并、回调与生命周期由 renderer 实现。
+- 验证：实际执行对应文件的 `node --check` 与 ESM import；核心 API smoke check 通过。DOM 行为暂以原理实现和后续内存 DOM smoke 验证为准，未运行浏览器检查。
+- 提交：`feat: add Component and PureComponent update APIs`（jj）。
 <!-- completion-records -->
