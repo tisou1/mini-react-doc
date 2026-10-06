@@ -36,3 +36,12 @@ StrictMode 可以作为透传容器使用，暂不模拟开发期双执行。
 - 版本控制：使用 `jj git init --colocate .` 初始化共置仓库；所有后续逻辑功能通过 jj 提交并移动 main bookmark。
 - 验证：目录原先为空；确认 Node 可用、jj 在沙箱外可运行，jj/Git 共置初始化成功。
 - 说明：当前 pnpm 命令是环境提供的 Corepack shim，且网络查询失败；零依赖项目提供等价 Node 命令，无需安装依赖。
+
+
+### 02 · Element 与 children 工具
+
+- 完成 API/功能：createElement、cloneElement、isValidElement、createRef、Fragment；Children.map / forEach / count / toArray / only。
+- 原理：保留单个与多个 children 的原始形状，分离 key 与 props，ref 采用 props.ref；Children 组合 key 且保持 Element 边界。
+- 验证：实际执行对应文件的 `node --check` 与 ESM import；核心 API smoke check 通过。DOM 行为暂以原理实现和后续内存 DOM smoke 验证为准，未运行浏览器检查。
+- 提交：`feat: add elements fragments refs and Children APIs`（jj）。
+<!-- completion-records -->
