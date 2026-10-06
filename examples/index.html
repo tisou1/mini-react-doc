@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>mini-react · 原理实验室</title>
+    <link rel="stylesheet" href="/examples/style.css" />
+    <script type="importmap">
+      {
+        "imports": {
+          "react": "/src/react/index.js",
+          "react-dom": "/src/react-dom/index.js",
+          "react-dom/client": "/src/react-dom/client.js"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <div id="portal-root"></div>
+    <script type="module" src="/examples/app.js"></script>
+  </body>
+</html>

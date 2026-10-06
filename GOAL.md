@@ -163,4 +163,11 @@ StrictMode 可以作为透传容器使用，暂不模拟开发期双执行。
 - 原理：开发服务器直接提供 ESM/HTML/CSS，默认 127.0.0.1:5173，可用 PORT 调整；无需构建。check 仅检查语法和入口。pnpm 网络与缓存访问在沙箱内受限，已在沙箱外直接运行成功，未安装项目运行时依赖。
 - 验证：实际通过 pnpm install --lockfile-only --offline、pnpm check；本机 HTTP smoke 确认首页与源码返回正确状态/MIME，服务随后关闭。
 - 提交：`chore: add zero-dependency development and validation tools`（jj）。
+
+### 20 · 可交互学习示例
+
+- 完成 API/功能：计数与 batching、定时器卸载清理、key 重排、reducer、Context/memo、refs/imperative handle、external store、deferred/transition、lazy/Suspense、Portal、类组件。
+- 原理：通过 import map 沿用 react / react-dom 模块名，源码使用 createElement，无需 JSX 转译；每张卡片说明对应原理。
+- 验证：示例 JS 已通过语法检查，HTTP 检查确认入口/脚本可加载；未执行浏览器行为或视觉检查。核心算法另有内存 DOM smoke。
+- 提交：`feat: add interactive React principles learning examples`（jj）。
 <!-- completion-records -->

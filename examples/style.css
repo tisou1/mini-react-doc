@@ -1,0 +1,45 @@
+:root {
+  font-family: system-ui, "Microsoft YaHei", sans-serif;
+  color: #243326;
+  background: #f6f4ed;
+  line-height: 1.6;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+body { margin: 0; }
+main { max-width: 1160px; margin: 0 auto; padding: 56px 28px 32px; }
+header { max-width: 740px; margin-bottom: 30px; }
+.eyebrow { color: #626e57; font-size: 12px; letter-spacing: 0.12em; }
+h1 { margin: 12px 0; font-size: clamp(38px, 7vw, 66px); line-height: 1.2; letter-spacing: -0.05em; }
+h1 span { display: block; font-size: 20px; font-weight: 500; letter-spacing: 0.08em; margin-top: 14px; }
+.intro, .description { color: #64705f; }
+.toolbar { margin-bottom: 24px; }
+.grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; align-items: start; }
+.panel { background: #fffefa; border: 1px solid #d9ddcf; padding: 24px; border-radius: 8px; }
+h2 { font-size: 18px; margin: 0 0 10px; }
+.description { font-size: 14px; margin: 0 0 22px; }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; }
+button, input { font: inherit; }
+button { border: 1px solid #bdc7b3; background: #eaf0e1; color: #2e442d; border-radius: 5px; padding: 7px 12px; cursor: pointer; }
+button:hover { background: #dce7ce; }
+button:disabled { opacity: 0.5; cursor: default; }
+:focus-visible { outline: 3px solid #718c54; outline-offset: 3px; }
+input { width: 100%; min-width: 0; padding: 8px 10px; border: 1px solid #cdd4c4; border-radius: 4px; background: white; }
+.metric { display: flex; align-items: baseline; gap: 16px; font-size: 44px; font-weight: 650; margin-bottom: 12px; }
+.metric small { color: #75846b; font-size: 14px; font-weight: 400; }
+.items { padding: 0; list-style: none; }
+.items li { display: flex; gap: 8px; align-items: center; margin: 10px 0; }
+.item-name { min-width: 72px; font-size: 14px; }
+.items button { white-space: nowrap; }
+.field { margin: 16px 0; }
+label { display: block; margin-bottom: 7px; font-size: 14px; }
+.lesson { background: #eff3e8; padding: 16px; margin-top: 16px; border-left: 3px solid #849969; }
+.lesson p { font-size: 14px; margin-bottom: 0; }
+.overlay { position: fixed; inset: 0; display: grid; place-items: center; padding: 24px; background: rgb(25 37 23 / 55%); }
+.dialog { max-width: 440px; background: #fffefa; border-radius: 8px; padding: 32px; }
+footer { color: #74806a; font-size: 13px; margin-top: 32px; }
+@media (max-width: 760px) {
+  main { padding: 32px 18px; }
+  .grid { grid-template-columns: 1fr; }
+  .panel { padding: 20px; }
+}
