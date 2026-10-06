@@ -195,3 +195,17 @@ StrictMode 可以作为透传容器使用，暂不模拟开发期双执行。
 - 验证：`node --check scripts/dev-server.js` 通过；实际临时占用 5173/5174 后成功启动在 5175，指定 PORT 连续占用两端口后成功递增，PORT=0 正常启动；三项首页 HTTP 检查均返回 200。验证创建的服务和监听均已关闭。
 - 文档：README 启动说明同步补充端口递增规则和实际访问地址。
 - 提交：`fix: retry development server on consecutive ports`（jj）。
+
+## 文档学习体验扩展
+
+- [x] 为 mini-react 核心源码补齐中文职责、关键字段、设计理由与阶段注释，保持运行行为不变。
+- [x] 提供可离线阅读的完整 Markdown 原理教材，覆盖真实代码链路、手算示例和简化边界。
+- [x] `pnpm dev` 启动 VitePress，展示原理、注释源码、API 对照和同地址交互实验；保留端口自动递增。
+- [x] 使用针对性语法、文档编译及本机 HTTP 检查，并按功能 jj 提交。
+
+### 24 · 系统化源码注释
+
+- 完成：`src/react/`、`src/shared/`、`src/reconciler/`、`src/react-dom/` 共 25 个源码文件补齐中文原理注释。
+- 重点：Element 与 Fiber、type/key 身份、Hooks slot 和共享 queue、候选快照、commit 消费、Context/memo/ref、类实例恢复、分片调度、DOM host、Effects 清理、Suspense 与 transition 简化。
+- 验证：实际逐文件 `node --check` 通过；使用现有 Vue 编译依赖中的 Babel parser 对比修改前后 25 个文件的 AST，排除注释与位置/格式元数据后完全一致，确认核心运行代码未变。
+- 提交：`docs: annotate mini-react implementation and lifecycle`（jj）。

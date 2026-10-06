@@ -1,3 +1,4 @@
+// Hooks 汇总入口；renderer 也从这里取得 render/commit/effect 契约，具体机制按模块拆分。
 export { renderWithHooks, commitHooks } from './hooks/runtime.js';
 export { useState, useReducer } from './hooks/state.js';
 export { useRef } from './hooks/ref.js';

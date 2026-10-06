@@ -1,3 +1,9 @@
+/**
+ * DOM 宿主适配层：接收 Fiber/props，将渲染器的描述转换为浏览器节点、属性和 ref。
+ * createDom 可以在 render 阶段创建脱离文档的节点；updateDom 对已挂载节点只在 commit 调用。
+ * children 的树协调、节点顺序和 Effect 生命周期属于 renderer，不由属性 diff 负责。
+ * 这里采用原生事件和有限的属性规则，不包含 React DOM 的完整事件/表单兼容层。
+ */
 import { TEXT, PORTAL } from '../shared/symbols.js';
 
 const HTML_NAMESPACE = 'http://www.w3.org/1999/xhtml';
@@ -10,6 +16,7 @@ const reservedProps = new Set([
   'suppressContentEditableWarning', 'suppressHydrationWarning',
 ]);
 
+// 真正的布尔属性以存在/不存在表达值；aria/data 和 booleanish 属性则保留字符串值。
 const booleanAttributes = new Set([
   'allowFullScreen', 'async', 'autoFocus', 'autoPlay', 'checked', 'controls',
   'default', 'defer', 'disabled', 'disablePictureInPicture', 'disableRemotePlayback',
@@ -63,6 +70,8 @@ const eventListeners = new WeakMap();
 const initializedNodes = new WeakSet();
 const pendingSelectDefaults = new WeakMap();
 
+// 以 DOM 为 WeakMap/WeakSet 的 key，既保存提交间的宿主状态，也不阻止已删除节点被回收。
+// Portal 的目标 document 可能与根不同，创建节点必须使用最近宿主容器的 ownerDocument。
 function getContainer(fiber) {
   for (let parent = fiber.parent; parent; parent = parent.parent) {
     if (parent.type === PORTAL) return parent.props.container;
@@ -75,6 +84,7 @@ function containerNamespace(container) {
     : container.namespaceURI === SVG_NAMESPACE ? SVG_NAMESPACE : HTML_NAMESPACE;
 }
 
+/** SVG 命名空间沿宿主层级继承，foreignObject 的后代和其作为 Portal 容器时切回 HTML。 */
 function getNamespace(fiber) {
   if (fiber.type === 'svg') return SVG_NAMESPACE;
   // Function、Fragment 等 Fiber 没有实际 DOM，命名空间要向上寻找宿主节点。
@@ -111,12 +121,14 @@ function cssName(name) {
 function styleValue(name, value) {
   if (value == null || typeof value === 'boolean' || value === '') return '';
   const unprefixed = name.replace(/^(Webkit|Moz|ms|O)([A-Z])/, (_, prefix, first) => first.toLowerCase());
+  // 常规数值尺寸补 px；0、无单位属性和 CSS 自定义属性保持原值，避免误改 CSS 语义。
   if (typeof value === 'number' && value !== 0 && !name.startsWith('--') && !unitlessStyles.has(unprefixed)) {
     return `${value}px`;
   }
   return String(value).trim();
 }
 
+/** 对象 style 按字段 diff：删除消失的旧字段，只设置改变的字段，保留未改动样式。 */
 function updateStyle(dom, previous = {}, next = {}) {
   previous ??= {};
   next ??= {};
@@ -128,6 +140,10 @@ function updateStyle(dom, previous = {}, next = {}) {
   }
 }
 
+/**
+ * React 风格事件 prop 映射到浏览器事件名/Capture；文本输入的 onChange 映射为 input。
+ * 这些映射只覆盖常用场景，不提供 SyntheticEvent、根节点委托或完整跨浏览器归一化。
+ */
 function getEvent(name, dom, props) {
   const capture = name.endsWith('Capture') && name !== 'onGotPointerCapture' && name !== 'onLostPointerCapture';
   let type = name.slice(2, capture ? -7 : undefined).toLowerCase();
@@ -152,6 +168,7 @@ function updateEvent(dom, name, nextHandler, props) {
   }
   const previous = listeners.get(name);
   const { type, capture } = getEvent(name, dom, props);
+  // 事件名还可能因 input.type 变化而改变，不能只比较 handler；先移除旧监听避免重复响应。
   if (previous?.handler === nextHandler && previous.type === type && previous.capture === capture) return;
   if (previous) {
     dom.removeEventListener(previous.type, previous.handler, previous.capture);
@@ -169,10 +186,12 @@ function updateAttribute(dom, name, value) {
   const attribute = attributeAliases[name] ?? (isSVG ? svgAttributeAliases[name] ?? name : name.toLowerCase());
   const isData = name.startsWith('data-') || name.startsWith('aria-');
   const isBoolean = booleanAttributes.has(name) || name === 'download' || name === 'capture';
+  // aria/data 的 false 必须成为字符串 "false"；普通布尔 false 则删除属性。
   const shouldRemove = value == null || (!isData && !booleanishAttributes.has(name) && value === false)
     || typeof value === 'function' || typeof value === 'symbol';
 
   if (isSVG && name === 'xlinkHref') {
+    // 带命名空间的 SVG 链接不能按普通 HTML attribute 处理。
     if (shouldRemove) dom.removeAttributeNS(XLINK_NAMESPACE, 'href');
     else dom.setAttributeNS(XLINK_NAMESPACE, 'xlink:href', String(value));
   } else if (shouldRemove) {
@@ -184,6 +203,7 @@ function updateAttribute(dom, name, value) {
   if (name === 'muted' && 'muted' in dom) dom.muted = Boolean(value);
 }
 
+/** select 的值体现在 option.selected；multiple 将一组值映射为多个选中项。 */
 function updateSelect(dom, value, isDefault) {
   if (dom.multiple) {
     const values = new Set((Array.isArray(value) ? value : [value]).map(String));
@@ -199,6 +219,10 @@ function updateSelect(dom, value, isDefault) {
   }
 }
 
+/**
+ * defaultValue/defaultChecked 仅初始化非受控字段；value/checked 每次提交同步受控字段。
+ * DOM property 才表达实时用户输入，attribute 通常只表达初始描述，不能互相替代。
+ */
 function updateFormProps(dom, previous, next, initial) {
   const tag = dom.localName;
   if (tag === 'select') {
@@ -238,6 +262,7 @@ export function updateDom(dom, previous = {}, next = {}) {
     return;
   }
   const initial = !initializedNodes.has(dom);
+  // 遍历属性并集才能发现删除；style、表单、innerHTML 等保留属性在各自的专门流程处理。
   for (const name of new Set([...Object.keys(previous), ...Object.keys(next)])) {
     if (/^on[A-Z]/.test(name)) {
       updateEvent(dom, name, next[name], next);

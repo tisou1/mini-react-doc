@@ -1,3 +1,8 @@
+/**
+ * React 风格的公共入口：named/default exports 共享同一组实现，不导入真实 React。
+ * API 描述与 renderer 分离；Suspense/StrictMode 是交给 renderer 识别的类型标记。
+ * StrictMode 在学习版仅透传 children，不模拟开发期重复 render/Effect。
+ */
 export { createElement, cloneElement, isValidElement, createRef, Children, Fragment } from './element.js';
 export { Component, PureComponent } from './component.js';
 export { createContext } from './context.js';

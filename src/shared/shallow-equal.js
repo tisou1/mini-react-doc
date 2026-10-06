@@ -1,4 +1,5 @@
 // memo / PureComponent 只比较第一层，嵌套对象需要保持引用稳定。
+/** 比较引用或第一层 own enumerable 字符串 key/value；Object.is 区分 ±0，视 NaN 为相等。 */
 export function shallowEqual(previous, next) {
   if (Object.is(previous, next)) return true;
   if (

@@ -1,6 +1,8 @@
 // 共享标记把「普通对象」与 Element、Context、组件包装器区分开。
 // Symbol.for 保证同一页面中的多个 mini-react 模块实例能识别这些类型。
+// mini-react 命名空间避免冒充真实 React Element；相同 API 不代表可以混用两个 renderer。
 export const ELEMENT = Symbol.for('mini-react.element');
+// TEXT 是 reconciler 把字符串/数字规范化后的内部节点类型，不是公共 createElement API。
 export const TEXT = Symbol.for('mini-react.text');
 export const FRAGMENT = Symbol.for('mini-react.fragment');
 export const CONTEXT = Symbol.for('mini-react.context');
