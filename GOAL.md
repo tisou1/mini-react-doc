@@ -107,4 +107,11 @@ StrictMode 可以作为透传容器使用，暂不模拟开发期双执行。
 - 原理：render 只登记 create/deps；layout 在 DOM/ref 提交后执行，passive 异步执行；依赖变化与卸载先清理旧 Effect；handle 包含 ref 的依赖。
 - 验证：实际通过 Hooks ESM import 和 `node scripts/check.js` 的语法/入口检查；相关 state、Effect、Context、ref 流程也通过一次性内存 DOM smoke，未建立测试套件。
 - 提交：`feat: add effect lifecycle and imperative handles`（jj）。
+
+### 12 · Context Hook
+
+- 完成 API/功能：useContext。
+- 原理：读取最近 Fiber Context Map 或默认值，并登记读取依赖，使 Context 更新能穿过 memo。
+- 验证：实际通过 Hooks ESM import 和 `node scripts/check.js` 的语法/入口检查；相关 state、Effect、Context、ref 流程也通过一次性内存 DOM smoke，未建立测试套件。
+- 提交：`feat: add useContext and context dependency tracking`（jj）。
 <!-- completion-records -->
