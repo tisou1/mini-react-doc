@@ -93,4 +93,11 @@ StrictMode 可以作为透传容器使用，暂不模拟开发期双执行。
 - 原理：跨 render 保持同一 ref 对象；修改 current 不会触发重新调度。
 - 验证：实际通过 Hooks ESM import 和 `node scripts/check.js` 的语法/入口检查；相关 state、Effect、Context、ref 流程也通过一次性内存 DOM smoke，未建立测试套件。
 - 提交：`feat: add useRef with stable object identity`（jj）。
+
+### 10 · 记忆 Hooks
+
+- 完成 API/功能：useMemo、useCallback。
+- 原理：用 Object.is 比较依赖，缓存值或函数；没有 deps 时每轮重新计算。
+- 验证：实际通过 Hooks ESM import 和 `node scripts/check.js` 的语法/入口检查；相关 state、Effect、Context、ref 流程也通过一次性内存 DOM smoke，未建立测试套件。
+- 提交：`feat: add useMemo and useCallback dependency caching`（jj）。
 <!-- completion-records -->
