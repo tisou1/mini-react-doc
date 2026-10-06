@@ -1,0 +1,8 @@
+node_modules/
+dist/
+coverage/
+.jj/
+.env
+.env.*
+!.env.example
+*.log

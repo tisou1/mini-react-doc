@@ -1,0 +1,21 @@
+{
+  "name": "mini-react",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "用于学习 React 原理的零依赖实现",
+  "engines": {
+    "node": ">=22"
+  },
+  "exports": {
+    ".": "./src/react/index.js",
+    "./jsx-runtime": "./src/react/jsx-runtime.js",
+    "./jsx-dev-runtime": "./src/react/jsx-dev-runtime.js",
+    "./react-dom": "./src/react-dom/index.js",
+    "./react-dom/client": "./src/react-dom/client.js"
+  },
+  "scripts": {
+    "dev": "node scripts/dev-server.js",
+    "check": "node scripts/check.js"
+  }
+}
