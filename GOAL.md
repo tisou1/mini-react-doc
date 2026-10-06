@@ -72,4 +72,11 @@ StrictMode 可以作为透传容器使用，暂不模拟开发期双执行。
 - 原理：memo 保存比较器，forwardRef 保存 render；lazy 缓存加载 Promise、模块和错误，readLazy 为 Suspense 提供挂起信号。
 - 验证：实际执行对应文件的 `node --check` 与 ESM import；核心 API smoke check 通过。DOM 行为暂以原理实现和后续内存 DOM smoke 验证为准，未运行浏览器检查。
 - 提交：`feat: add memo forwardRef and lazy wrappers`（jj）。
+
+### 07 · DOM host
+
+- 完成 API/功能：文本与属性增删、style、原生事件/Capture、受控表单、SVG、dangerouslySetInnerHTML、object/callback refs。
+- 原理：新 DOM 在 render 中脱离文档创建；已挂载 DOM 仅在 commit 修改。支持 Portal 的 ownerDocument 与 namespace；callback ref cleanup 由 renderer 保存。
+- 验证：实际执行对应文件的 `node --check` 与 ESM import；核心 API smoke check 通过。DOM 行为暂以原理实现和后续内存 DOM smoke 验证为准，未运行浏览器检查。
+- 提交：`feat: implement DOM attributes events forms and refs`（jj）。
 <!-- completion-records -->
