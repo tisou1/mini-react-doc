@@ -170,4 +170,11 @@ StrictMode 可以作为透传容器使用，暂不模拟开发期双执行。
 - 原理：通过 import map 沿用 react / react-dom 模块名，源码使用 createElement，无需 JSX 转译；每张卡片说明对应原理。
 - 验证：示例 JS 已通过语法检查，HTTP 检查确认入口/脚本可加载；未执行浏览器行为或视觉检查。核心算法另有内存 DOM smoke。
 - 提交：`feat: add interactive React principles learning examples`（jj）。
+
+### 21 · API 兼容说明与源码阅读路线
+
+- 完成 API/功能：README.md、docs/architecture.md；启动、导入、JSX 配置、API 对照、模块地图与调试断点。
+- 原理：逐项注明无 SyntheticEvent、SSR/hydration、ErrorBoundary、StrictMode 双执行、eager state bailout 和完整 Lanes；解释 Suspense primary 卸载与简化 pending/deferred。
+- 验证：已核对 39 个本地文档链接存在、代码围栏配对、包管理器版本及当前源码行为。
+- 提交：`docs: explain architecture API compatibility and learning path`（jj）。
 <!-- completion-records -->
