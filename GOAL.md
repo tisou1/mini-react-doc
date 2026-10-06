@@ -142,4 +142,11 @@ StrictMode 可以作为透传容器使用，暂不模拟开发期双执行。
 - 原理：scope 同步执行，调度请求用 timer 延后；pending 通过任务计数和 Promise 模拟，deferred 取消旧 timer。明确不提供 Lanes 或同一根中严格的优先级隔离。
 - 验证：实际 `pnpm check` 通过（29 个 JS 文件语法、5 个公共入口导入）。核心 renderer/Portal/Suspense 已通过一次性内存 DOM smoke；transition 的精确并发语义不属于验证或兼容承诺。
 - 提交：`feat: add simplified transitions and deferred values`（jj）。
+
+### 17 · Portal 与同步 DOM 入口
+
+- 完成 API/功能：createPortal、flushSync。
+- 原理：Portal 改变 host 容器但保留 Fiber/Context 父链，卸载保留外来节点；flushSync 同步处理调度器里已排队的根。事件仍沿真实 DOM 冒泡。
+- 验证：实际 `pnpm check` 通过（29 个 JS 文件语法、5 个公共入口导入）。核心 renderer/Portal/Suspense 已通过一次性内存 DOM smoke；transition 的精确并发语义不属于验证或兼容承诺。
+- 提交：`feat: expose portals and synchronous flushing`（jj）。
 <!-- completion-records -->
