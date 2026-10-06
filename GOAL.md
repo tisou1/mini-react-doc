@@ -209,3 +209,11 @@ StrictMode 可以作为透传容器使用，暂不模拟开发期双执行。
 - 重点：Element 与 Fiber、type/key 身份、Hooks slot 和共享 queue、候选快照、commit 消费、Context/memo/ref、类实例恢复、分片调度、DOM host、Effects 清理、Suspense 与 transition 简化。
 - 验证：实际逐文件 `node --check` 通过；使用现有 Vue 编译依赖中的 Babel parser 对比修改前后 25 个文件的 AST，排除注释与位置/格式元数据后完全一致，确认核心运行代码未变。
 - 提交：`docs: annotate mini-react implementation and lifecycle`（jj）。
+
+### 25 · 完整原理教材
+
+- 完成：`docs/principles.md` 共 552 行、14 个章节，可脱离文档站阅读；已有 architecture 页面链接改为站内源码章节。
+- 内容：Element/JSX、Fiber 字段与遍历、key 重排、5ms 协作预算、render/commit、state 队列与闭包、Effects、Context/memo/类组件、refs、external store、ID、Portal、lazy/Suspense、transition 和按钮更新时间线。
+- 精度：区分真实 React 与本项目；明确 useContext/useDebugValue 不消耗当前 Hook 数组槽位、layout 在 commit 内执行、callback ref 优先 cleanup、fallback 不保留 primary 树及无 Lanes。
+- 验证：17 组代码围栏配对、10 个 JS 示例语法、24 个源码路径、5 个站内链接/锚点检查通过；完成与当前实现的只读交叉审查，VitePress 编译与本机模块请求通过。
+- 提交：`docs: add complete mini-react principles walkthrough`（jj）。

@@ -26,24 +26,24 @@ passive Effects
 
 | 文件 | 阅读重点 |
 | --- | --- |
-| [src/shared/symbols.js](../src/shared/symbols.js) | Element、TEXT、Fragment、Context、包装器与 Portal 的类型标记。 |
-| [src/shared/shallow-equal.js](../src/shared/shallow-equal.js) | memo/PureComponent 的浅比较，不递归比较嵌套对象。 |
-| [src/react/element.js](../src/react/element.js) | Element 的构造、clone、Children 遍历和 key 组合。 |
-| [src/react/component.js](../src/react/component.js) | 类组件只通过 `__updater` 请求更新，实际合并与提交由 renderer 完成。 |
-| [src/react/context.js](../src/react/context.js) | 默认值、Provider 自引用和 Consumer 类型。 |
-| [src/react/wrappers.js](../src/react/wrappers.js) | memo/forwardRef/lazy 包装对象与 lazy 状态机。 |
-| [src/react/jsx-runtime.js](../src/react/jsx-runtime.js)、[jsx-dev-runtime.js](../src/react/jsx-dev-runtime.js) | JSX 转换器调用的纯 Element 创建入口。 |
-| [src/react/index.js](../src/react/index.js)、[hooks.js](../src/react/hooks.js) | 公共 API 汇总，入口不承担渲染工作。 |
-| [src/react-dom/client.js](../src/react-dom/client.js)、[index.js](../src/react-dom/index.js) | `createRoot`、`createPortal` 与 `flushSync` 的包入口。 |
-| [src/reconciler/scheduler.js](../src/reconciler/scheduler.js) | 根节点队列、批量更新、约 5ms 工作预算、同步 flush 和简化 transition。 |
-| [src/reconciler/fiber.js](../src/reconciler/fiber.js) | 子节点规范化、身份匹配、候选 Fiber 与遍历指针。 |
-| [src/reconciler/renderer.js](../src/reconciler/renderer.js) | 根状态、工作循环、组件执行、Context/Suspense、DOM 提交与卸载。 |
-| [src/react-dom/host.js](../src/react-dom/host.js) | DOM 创建、属性/style/事件/表单更新、namespace 和 ref 赋值。 |
-| [src/react/hooks/runtime.js](../src/react/hooks/runtime.js) | 当前 Fiber、Hook 索引、候选 Hook 快照与 commit 队列消费。 |
-| [src/react/hooks/state.js](../src/react/hooks/state.js)、[ref.js](../src/react/hooks/ref.js)、[memo.js](../src/react/hooks/memo.js) | 状态更新队列、持久 ref、依赖比较与缓存。 |
-| [src/react/hooks/effect.js](../src/react/hooks/effect.js) | 记录 Effects、依赖变化、layout/passive 执行与 cleanup。 |
-| [src/react/hooks/context.js](../src/react/hooks/context.js)、[id.js](../src/react/hooks/id.js) | Context 依赖跟踪、稳定客户端 ID 和 DebugValue 入口。 |
-| [src/react/hooks/external-store.js](../src/react/hooks/external-store.js)、[transition.js](../src/react/hooks/transition.js) | 外部 store 订阅、transition pending 和 deferred 的简化实现。 |
+| [src/shared/symbols.js](./source#shared) | Element、TEXT、Fragment、Context、包装器与 Portal 的类型标记。 |
+| [src/shared/shallow-equal.js](./source#shared) | memo/PureComponent 的浅比较，不递归比较嵌套对象。 |
+| [src/react/element.js](./source#element) | Element 的构造、clone、Children 遍历和 key 组合。 |
+| [src/react/component.js](./source#components) | 类组件只通过 `__updater` 请求更新，实际合并与提交由 renderer 完成。 |
+| [src/react/context.js](./source#context) | 默认值、Provider 自引用和 Consumer 类型。 |
+| [src/react/wrappers.js](./source#components) | memo/forwardRef/lazy 包装对象与 lazy 状态机。 |
+| [src/react/jsx-runtime.js](./source#element)、[jsx-dev-runtime.js](./source#element) | JSX 转换器调用的纯 Element 创建入口。 |
+| [src/react/index.js](./source#shared)、[hooks.js](./source#hooks) | 公共 API 汇总，入口不承担渲染工作。 |
+| [src/react-dom/client.js](./source#dom)、[index.js](./source#dom) | `createRoot`、`createPortal` 与 `flushSync` 的包入口。 |
+| [src/reconciler/scheduler.js](./source#scheduler) | 根节点队列、批量更新、约 5ms 工作预算、同步 flush 和简化 transition。 |
+| [src/reconciler/fiber.js](./source#fiber) | 子节点规范化、身份匹配、候选 Fiber 与遍历指针。 |
+| [src/reconciler/renderer.js](./source#renderer) | 根状态、工作循环、组件执行、Context/Suspense、DOM 提交与卸载。 |
+| [src/react-dom/host.js](./source#dom) | DOM 创建、属性/style/事件/表单更新、namespace 和 ref 赋值。 |
+| [src/react/hooks/runtime.js](./source#hooks) | 当前 Fiber、Hook 索引、候选 Hook 快照与 commit 队列消费。 |
+| [src/react/hooks/state.js](./source#hooks)、[ref.js](./source#hooks)、[memo.js](./source#hooks) | 状态更新队列、持久 ref、依赖比较与缓存。 |
+| [src/react/hooks/effect.js](./source#effects) | 记录 Effects、依赖变化、layout/passive 执行与 cleanup。 |
+| [src/react/hooks/context.js](./source#context)、[id.js](./source#context) | Context 依赖跟踪、稳定客户端 ID 和 DebugValue 入口。 |
+| [src/react/hooks/external-store.js](./source#context)、[transition.js](./source#components) | 外部 store 订阅、transition pending 和 deferred 的简化实现。 |
 
 ## 1. Element 只描述 UI
 
@@ -145,6 +145,6 @@ Provider 为当前候选分支复制 Map；其后代读到新值，兄弟分支�
 
 ## 继续学习
 
-掌握主路径后，可以分别研究：如何增加 eager state bailout、如何让 memo 跳过无更新的子树、如何在 Suspense 显示 fallback 时保留 primary 状态、如何按优先级处理更新。每次只扩展一个机制，先在 [GOAL.md](../GOAL.md) 记录目标与简化，再完成最小验证和 jj 提交。
+掌握主路径后，可以分别研究：如何增加 eager state bailout、如何让 memo 跳过无更新的子树、如何在 Suspense 显示 fallback 时保留 primary 状态、如何按优先级处理更新。每次只扩展一个机制，先在 `GOAL.md` 记录目标与简化，再完成最小验证和 jj 提交。
 
-完整 API 范围与暂缓项见 [README.md](../README.md)。React 本身的设计应以 [React 官方文档](https://react.dev/reference/react) 为准。
+完整 API 范围与暂缓项见 [API 与兼容范围](./api)。React 本身的设计应以 [React 官方文档](https://react.dev/reference/react) 为准。
