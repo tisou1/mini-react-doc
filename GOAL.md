@@ -79,4 +79,11 @@ StrictMode 可以作为透传容器使用，暂不模拟开发期双执行。
 - 原理：新 DOM 在 render 中脱离文档创建；已挂载 DOM 仅在 commit 修改。支持 Portal 的 ownerDocument 与 namespace；callback ref cleanup 由 renderer 保存。
 - 验证：实际执行对应文件的 `node --check` 与 ESM import；核心 API smoke check 通过。DOM 行为暂以原理实现和后续内存 DOM smoke 验证为准，未运行浏览器检查。
 - 提交：`feat: implement DOM attributes events forms and refs`（jj）。
+
+### 08 · 状态 Hooks 与 dispatcher
+
+- 完成 API/功能：useState、useReducer；lazy initializer、functional updates、reducer init、稳定 dispatch。
+- 原理：按调用顺序克隆 Hooks 快照，render 读取共享队列，commitHooks 才消费；卸载后的 dispatch 忽略，明确拒绝未实现的 render-phase state updates。
+- 验证：实际通过 Hooks ESM import 和 `node scripts/check.js` 的语法/入口检查；相关 state、Effect、Context、ref 流程也通过一次性内存 DOM smoke，未建立测试套件。
+- 提交：`feat: implement state and reducer hook queues`（jj）。
 <!-- completion-records -->
