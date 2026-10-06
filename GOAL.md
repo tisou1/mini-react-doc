@@ -187,3 +187,11 @@ StrictMode 可以作为透传容器使用，暂不模拟开发期双执行。
 - 版本控制：所有逻辑功能提交均使用 jj，每个提交包含 GOAL.md；main bookmark 与 Git 共用历史，未 push 或重写已完成提交。
 - 验证边界：没有建立测试套件、执行全量构建、E2E、浏览器行为或视觉验证；内存 DOM 不能覆盖真实浏览器的全部表单与事件差异。
 - 提交：`docs: record completed mini-react goal and verification`（jj）。
+
+### 23 · 开发服务器自动切换端口
+
+- 完成：默认从 5173 开始，遇到 EADDRINUSE 依次尝试 5174、5175 等端口；指定 PORT 时从该端口开始递增，PORT=0 继续由系统分配端口。
+- 原理：在 error 事件中增加端口并重新 listen；成功日志通过唯一的 listening 监听输出实际地址，避免重试重复注册回调。
+- 验证：`node --check scripts/dev-server.js` 通过；实际临时占用 5173/5174 后成功启动在 5175，指定 PORT 连续占用两端口后成功递增，PORT=0 正常启动；三项首页 HTTP 检查均返回 200。验证创建的服务和监听均已关闭。
+- 文档：README 启动说明同步补充端口递增规则和实际访问地址。
+- 提交：`fix: retry development server on consecutive ports`（jj）。

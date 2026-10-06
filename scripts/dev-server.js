@@ -4,7 +4,7 @@ import { resolve, relative, isAbsolute, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const projectRoot = fileURLToPath(new URL('../', import.meta.url));
-const port = Number(process.env.PORT ?? 5173);
+let port = Number(process.env.PORT ?? 5173);
 if (!Number.isInteger(port) || port < 0 || port > 65535) {
   throw new Error('PORT must be an integer between 0 and 65535.');
 }
@@ -46,10 +46,16 @@ const server = createServer(async (request, response) => {
 });
 
 server.on('error', error => {
-  console.error(error.code === 'EADDRINUSE' ? `Port ${port} is in use. Set PORT to another port.` : error);
+  if (error.code === 'EADDRINUSE' && port > 0 && port < 65535) {
+    console.log(`Port ${port} is in use. Trying ${port + 1}...`);
+    server.listen(++port, '127.0.0.1');
+    return;
+  }
+  console.error(error);
   process.exitCode = 1;
 });
-server.listen(port, '127.0.0.1', () => {
+server.on('listening', () => {
   console.log(`mini-react: http://localhost:${server.address().port}`);
   console.log('修改文件后刷新页面；Ctrl+C 停止服务。');
 });
+server.listen(port, '127.0.0.1');

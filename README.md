@@ -18,7 +18,7 @@ pnpm dev
 node scripts/dev-server.js
 ```
 
-打开 [http://localhost:5173](http://localhost:5173)。浏览器示例入口是 [examples/index.html](examples/index.html)。请通过开发服务器访问，浏览器 ESM 不适合直接双击 HTML 文件启动。
+默认打开 [http://localhost:5173](http://localhost:5173)；如果端口被占用，会依次尝试 5174、5175 等端口，访问地址以终端输出为准。设置 `PORT` 时，以该端口为起点递增。浏览器示例入口是 [examples/index.html](examples/index.html)。请通过开发服务器访问，浏览器 ESM 不适合直接双击 HTML 文件启动。
 
 最小检查命令：
 
