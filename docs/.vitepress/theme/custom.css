@@ -50,8 +50,9 @@
 .render-walkthrough button:focus-visible, .reading-links a:focus-visible { outline: 3px solid var(--vp-c-brand-1); outline-offset: 3px; }
 .example-frame { width: 100%; height: 960px; border: 1px solid var(--vp-c-divider); border-radius: 6px; }
 .fiber-intro { padding: 0 20px; color: var(--vp-c-text-2); font-size: 14px; }
-.fiber-board { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; padding: 20px; }
-.fiber-tree { min-width: 0; }
+.fiber-board { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 16px; padding: 20px; }
+/* 两列共享标题、说明、节点列表三行，说明换行不会再错开对应节点。 */
+.fiber-tree { display: grid; grid-row: span 3; grid-template-rows: subgrid; min-width: 0; }
 .fiber-tree h3 { margin: 0 0 10px; font-size: 15px; }
 .fiber-tree p { margin: 0 0 12px; color: var(--vp-c-text-2); font-size: 13px; }
 .vp-doc .fiber-nodes { list-style: none; padding: 0; margin: 0; }
@@ -69,7 +70,8 @@
 .fiber-status { padding: 0 20px; min-height: 3.6em; }
 .fiber-controls { flex-wrap: wrap; justify-content: flex-start; gap: 8px; }
 @media (max-width: 640px) {
-  .fiber-board { grid-template-columns: minmax(0, 1fr); padding: 16px; }
+  .fiber-board { grid-template-columns: minmax(0, 1fr); gap: 16px; padding: 16px; }
+  .fiber-tree { display: block; grid-row: auto; }
   .fiber-controls { padding-inline: 16px; }
 }
 @media (max-width: 480px) {

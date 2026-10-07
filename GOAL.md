@@ -238,7 +238,7 @@ StrictMode 可以作为透传容器使用，暂不模拟开发期双执行。
 ## UI 审查修复（2026-10-07）
 
 - [x] Portal 弹窗保持键盘焦点，关闭后返回触发按钮。
-- [ ] Fiber 桌面双列说明和节点起点对齐。
+- [x] Fiber 桌面双列说明和节点起点对齐。
 - [ ] 移动端压缩 current 展示，将计数、进度和操作集中。
 - [ ] 提升示例辅助文字和页脚对比度。
 
@@ -248,3 +248,10 @@ StrictMode 可以作为透传容器使用，暂不模拟开发期双执行。
 - 原理：焦点管理和背景修改在 layout 阶段执行，资源与监听在对应 cleanup 撤销；Portal 位于背景容器之外，不受其 inert 影响。保留原页面状态，不改核心 renderer 或 Hooks。
 - 验证：`node --check examples/app.js` 通过。本机 Chrome 针对性检查实际覆盖初始焦点、Tab/Shift+Tab 循环、inert/滚动锁、三种关闭方式的焦点恢复与监听清理，全部通过；未增加测试依赖或执行全量测试。
 - 提交：`fix: keep Portal dialog focus and restore its trigger`（jj）。
+
+### 29 · Fiber 双列节点对齐
+
+- 完成：桌面 current/work 两列通过 CSS subgrid 共享标题、说明和节点列表三行；说明文字自动换行时，两列节点仍从同一位置开始。移动端保留单列布局。
+- 原理：使用共享网格轨道按实际内容确定高度，避免用固定说明高度或 JavaScript 测量同步。
+- 验证：本机 Chrome 在 1440、1024、768px 宽度逐项比较 7 个对应节点的纵坐标，差值均小于 1px，且页面无横向溢出；375px 单列回退检查通过，桌面截图已查看。
+- 提交：`fix: align Fiber comparison captions and node rows`（jj）。
