@@ -4,6 +4,8 @@
 
 文中的“本项目”指 mini-react；涉及 React 本身的行为时会明确标注，并提供官方资料。 这里采用了与 React 相近的职责划分，但对象字段、调度策略与边界处理都是教学实现，不能据此推断 React 内部源码。 需要简短导航时，先看[架构阅读路线](./architecture)；需要对照代码时，打开[源码讲解](./source#renderer)。
 
+重点学习现代 React Fiber 时，配合阅读 [Fiber 架构专题](./fiber)：从双缓冲与工作循环深入到 Lanes、更新队列重放和 Suspense，并逐项对照本项目的简化。
+
 ## 1. 先建立完整地图
 
 ### 1.1 四个层次分别保存什么
@@ -162,6 +164,17 @@ Root
 ### 3.3 文本、空值与嵌套数组
 
 字符串、数字和 bigint 转成 TEXT Element，最终对应 Text DOM；`null`、`undefined` 和 boolean 不创建 Fiber。 空值仍占原集合的位置，例如 `[null, h(Counter)]` 中 Counter 的无 key 索引为 1。 嵌套数组被包装为 Fragment，保留层级；随意展平会改变以父节点和位置决定的身份。
+
+### 3.4 从教学 Fiber 走向真实 React
+
+本项目用显式树指针、候选快照和同步 commit 展示 Fiber 的核心分工。继续读真实 React 源码时，还需要理解以下机制：
+
+| 学习问题 | 真实 React 中继续关注的机制 | 专题 |
+| --- | --- | --- |
+| 每次 render 都创建完整的新树吗？ | `createWorkInProgress`、`current/alternate` 的对象复用 | [双缓冲](./fiber#double-buffer) |
+| 子节点返回后还要做什么？ | render 内的 `beginWork`、`completeWork` 与标记汇总 | [工作循环](./fiber#work-loop) |
+| 为何紧急更新能先显示，后续状态仍按原顺序计算？ | `lanes/childLanes`、`baseState/baseQueue` 与更新重放 | [Lanes 与 rebase](./fiber#lanes) |
+| 哪些知识能直接对照本仓库？ | 每个机制的真实实现与教学简化 | [差异表](./fiber#comparison) |
 
 ## 4. 协调：先判断身份，再决定复用
 

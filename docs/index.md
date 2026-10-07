@@ -11,17 +11,25 @@ description: 从一次点击开始，逐步理解 mini-react 的 Element、Fiber
 
 <div class="reading-links">
   <a href="./principles">阅读完整原理</a>
+  <a href="./fiber">重点理解 Fiber</a>
   <a href="./source">对照注释源码</a>
   <a href="./examples">运行交互实验</a>
 </div>
 
 <RenderWalkthrough />
 
+## Fiber 怎样把一次更新拆成可恢复的工作
+
+下面按本项目的工作循环手动推进候选树。先处理几个 Fiber，再让出主线程或追加更新；观察 `current` 和屏幕计数何时改变。完整架构、真实 React 的双缓冲与 Lanes 见 [Fiber 专题](./fiber)。
+
+<FiberWalkthrough />
+
 ## 按什么顺序读
 
 | 阅读顺序 | 你要解决的问题 | 对应页面 |
 | --- | --- | --- |
 | 先建立整体认识 | JSX 描述怎样变成 DOM？为什么有 render 和 commit？ | [完整原理讲解](./principles) |
+| 重点理解 Fiber | current/alternate 如何协作？beginWork、completeWork 与 Lanes 各管什么？ | [现代 React Fiber 架构](./fiber) |
 | 跟踪一次更新 | dispatch 后哪些函数执行？状态何时发布？ | [更新路径与断点](./architecture) |
 | 对照代码 | alternate、processedCount、Context Map 各保存什么？ | [带注释的完整源码](./source) |
 | 确认兼容范围 | 哪些 API 保留了 React 用法？哪些机制被简化？ | [API 对照](./api) |

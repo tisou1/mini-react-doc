@@ -49,6 +49,29 @@
 .walkthrough-stages button:hover, .walkthrough-controls button:not(:disabled):hover { border-color: var(--vp-c-brand-1); }
 .render-walkthrough button:focus-visible, .reading-links a:focus-visible { outline: 3px solid var(--vp-c-brand-1); outline-offset: 3px; }
 .example-frame { width: 100%; height: 960px; border: 1px solid var(--vp-c-divider); border-radius: 6px; }
+.fiber-intro { padding: 0 20px; color: var(--vp-c-text-2); font-size: 14px; }
+.fiber-board { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; padding: 20px; }
+.fiber-tree { min-width: 0; }
+.fiber-tree h3 { margin: 0 0 10px; font-size: 15px; }
+.fiber-tree p { margin: 0 0 12px; color: var(--vp-c-text-2); font-size: 13px; }
+.vp-doc .fiber-nodes { list-style: none; padding: 0; margin: 0; }
+.vp-doc .fiber-node { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 8px; margin: 0; padding: 8px 10px 8px calc(10px + var(--fiber-depth) * 12px); border-left: 2px solid var(--vp-c-divider); }
+.vp-doc .fiber-node + .fiber-node { margin-top: 4px; }
+.fiber-node-label { font-family: var(--vp-font-family-mono); font-size: 13px; overflow-wrap: anywhere; }
+.fiber-node-state { font-size: 11px; color: var(--vp-c-text-2); }
+.fiber-node[data-state="next"] { border-color: var(--vp-c-brand-1); background: var(--vp-c-brand-soft); }
+.fiber-node[data-state="next"] .fiber-node-state { color: var(--vp-c-brand-1); font-weight: 600; }
+.fiber-node[data-state="pending"] { color: var(--vp-c-text-2); border-left-style: dashed; }
+.fiber-metrics { display: flex; flex-wrap: wrap; gap: 8px 20px; margin: 0 20px; padding: 12px 0; border-block: 1px solid var(--vp-c-divider); font-family: var(--vp-font-family-mono); font-size: 12px; }
+.fiber-metrics dt { color: var(--vp-c-text-2); }
+.fiber-metrics dd { margin: 2px 0 0; font-size: 16px; font-weight: 600; }
+.fiber-status, .fiber-empty { font-size: 14px; color: var(--vp-c-text-2); }
+.fiber-status { padding: 0 20px; min-height: 3.6em; }
+.fiber-controls { flex-wrap: wrap; justify-content: flex-start; gap: 8px; }
+@media (max-width: 640px) {
+  .fiber-board { grid-template-columns: minmax(0, 1fr); padding: 16px; }
+  .fiber-controls { padding-inline: 16px; }
+}
 @media (max-width: 480px) {
   .walkthrough-stages { grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 12px; }
   .walkthrough-detail { min-height: 210px; padding-inline: 16px; }

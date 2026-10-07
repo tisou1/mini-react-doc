@@ -29,6 +29,8 @@ pnpm dev:examples
 
 完整的 Markdown 原理教材是 [docs/principles.md](docs/principles.md)，可在文件中阅读，也会展示为文档网页。简要架构与断点见 [docs/architecture.md](docs/architecture.md)。源码已增加中文职责、状态流转和关键设计理由注释。
 
+重点学习 Fiber 时，阅读 [docs/fiber.md](docs/fiber.md)：双缓冲、beginWork/completeWork、render/commit、Lanes 与更新重放、Hooks 和 Suspense，均有真实 React 与本项目的对照。文档首页可以逐步推演候选树、让出主线程、追加更新重启和 commit。
+
 文档静态构建与预览：
 
 ```sh

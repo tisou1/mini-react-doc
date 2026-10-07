@@ -16,6 +16,7 @@ export default defineConfig({
     siteTitle: 'mini-react / 原理手册',
     nav: [
       { text: '原理总览', link: '/principles' },
+      { text: 'Fiber 专题', link: '/fiber' },
       { text: '注释源码', link: '/source' },
       { text: '交互实验', link: '/examples' },
     ],
@@ -24,6 +25,13 @@ export default defineConfig({
         { text: '阅读导航', link: '/' },
         { text: '完整原理讲解', link: '/principles' },
         { text: '一次更新的路径', link: '/architecture' },
+      ] },
+      { text: 'Fiber 重点', items: [
+        { text: '现代 React Fiber 架构', link: '/fiber' },
+        { text: 'current 与双缓冲', link: '/fiber#double-buffer' },
+        { text: 'beginWork 与 completeWork', link: '/fiber#work-loop' },
+        { text: 'Lanes 与更新重放', link: '/fiber#lanes' },
+        { text: '与 mini-react 对照', link: '/fiber#comparison' },
       ] },
       { text: '对照实现', items: [
         { text: '带注释的完整源码', link: '/source' },

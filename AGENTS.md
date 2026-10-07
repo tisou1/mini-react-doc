@@ -19,6 +19,7 @@
 - 保持模块无运行时依赖。需要包管理器时直接使用 `pnpm`，不切换锁文件、不默认使用 Corepack 包装命令。
 - 文档站使用 VitePress 与 Vue 开发依赖，核心 mini-react 不依赖它们；`pnpm dev` 启动原理文档，`pnpm dev:examples` 单独启动示例。
 - 源码注释解释职责、关键字段、调用顺序和设计理由，避免逐行翻译；实现改变时同步更新 `docs/principles.md`，并注明与 React 的简化差异。
+- Fiber 架构的重点说明在 `docs/fiber.md`；修改协调、调度或状态队列时同步核对。真实 React 内部机制引用官方文档或固定版本源码，不能把教学实现或旧版本架构写成现行行为。
 - `docs/source.md` 通过 VitePress snippet 引入真实源码，不能手工维护另一份实现；交互示例资源与原生 ESM 服务器共用。
 
 ## 验证

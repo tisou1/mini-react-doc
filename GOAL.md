@@ -202,7 +202,7 @@ StrictMode 可以作为透传容器使用，暂不模拟开发期双执行。
 - [x] 提供可离线阅读的完整 Markdown 原理教材，覆盖真实代码链路、手算示例和简化边界。
 - [x] `pnpm dev` 启动 VitePress，展示原理、注释源码、API 对照和同地址交互实验；保留端口自动递增。
 - [x] 使用针对性语法、文档编译及本机 HTTP 检查，并按功能 jj 提交。
-- [ ] 补充现代 React Fiber 专题，重点对照双缓冲、工作循环、Lanes、更新重放与本项目的简化。
+- [x] 补充现代 React Fiber 专题，重点对照双缓冲、工作循环、Lanes、更新重放与本项目的简化。
 
 ### 24 · 系统化源码注释
 
@@ -226,3 +226,11 @@ StrictMode 可以作为透传容器使用，暂不模拟开发期双执行。
 - 启动：默认 5173，`strictPort: false` 在占用时自动递增；支持 PORT 指定起始端口。VitePress 与 Vue 是固定版本开发依赖，按 pnpm 官方方式允许 esbuild 构建。
 - 验证：实际 `pnpm check` 通过（32 个 JS 文件语法、5 个公共入口导入）；`pnpm docs:build` 成功完成 Markdown、snippet、链接及 SSG 编译。本机 HTTP 检查覆盖 9 个页面模块/原生资源请求；实际 `pnpm dev` 遇到 5173/5174 占用后启动在 5175，独立示例服务首页和 ESM 资源的另外 2 项请求也通过，验证服务均已关闭。未执行浏览器行为、视觉或 E2E 检查。
 - 提交：`feat: serve React principles and examples with VitePress`（jj）。此前自动审批的额度限制已解除，按原授权继续提交。
+
+### 27 · 现代 Fiber 架构专题与候选树推演
+
+- 完成：`docs/fiber.md` 提供 331 行、10 个章节的 Fiber 专题。以 2026-10-07 核对的 React 19.3.0 官方固定 tag 为参照，覆盖 Element/Fiber/DOM、树指针、current/alternate 双缓冲、beginWork/completeWork、flags/subtreeFlags、type/key、Lanes、baseQueue/rebase、Hook Effects、bailout 和 Suspense 隐藏主树。
+- 精度：逐项对照 mini-react 的每轮新建候选树、无独立 completeWork/flags/Lanes、version 重启、commit 消费 pending、timer transition 与 primary 不保活；区分 Scheduler 等级与 Lanes、旧跨 Fiber effect list 与现代 Hook Effect 环链，不把 React 5ms 写成公共保证。
+- 展示：首页加入 Fiber 手动推演，可逐单元执行、保留进度让出、追加更新重启、整树完成后提交和重置。current 与 work 分列，屏幕计数只在 commit 发布；明确教学占位和手动提交与真实源码的差别。导航、完整教材、源码页和 README 同步加入专题入口，AGENTS.md 记录维护要求。
+- 验证：实际浏览核对 11 个 React 官方源码文件并完成只读技术审查；10 组围栏、8 个站内链接与 4 个锚点通过。Vue SFC/script setup/client/SSR 编译及针对性的状态推进检查通过；`pnpm check` 通过（32 个 JS 文件、5 个公共入口）。新增页面和组件后的 `pnpm docs:build` 通过，产物检查确认专题、4 个锚点、首页 14 个树节点/控制按钮及复制的示例/源码存在。未执行浏览器行为、视觉或 E2E 检查。
+- 提交：`docs: explain modern Fiber architecture with interactive walkthrough`（jj）。

@@ -27,6 +27,8 @@ outline: [2, 2]
 
 child/sibling/parent 表示遍历路径，alternate 指向已提交节点。type 与 key 决定组件身份。
 
+这里每轮新建候选 Fiber；现代 React 的 `return`、双缓冲复用、`flags/subtreeFlags` 和 Lanes 详见 [Fiber 专题](./fiber)。
+
 <<< @/../src/reconciler/fiber.js
 
 ## 调度与批量更新 {#scheduler}
