@@ -99,14 +99,23 @@ function reset() {
       <p>这是教学状态机，不是实时监控或真实调度器。每次点击对应一次 <code>performUnit</code>；“已处理”表示该单元已执行，不代表真实 React 的 <code>completeWork</code>。推演将 commit 留给按钮观察，实际源码由 <code>performWork</code> 在整树完成后调用 <code>commitRoot</code>。</p>
       <p><code>child</code> 优先向下；没有子节点时找 <code>sibling</code>，找不到就沿 <code>parent</code> 返回，直到找到兄弟或回到根。</p>
     </div>
-    <dl class="fiber-metrics">
-      <div><dt>屏幕上的 DOM 计数</dt><dd>{{ currentCount }}</dd></div>
-      <div><dt>pending 队列</dt><dd>{{ pendingCount }} 次 +1</dd></div>
-      <div><dt>候选目标</dt><dd>{{ targetCount }}</dd></div>
-      <div><dt>工作进度</dt><dd>{{ isCommitted ? '已提交' : `${processed} / ${units.length}` }}{{ isPaused ? ' · 已暂停' : '' }}</dd></div>
-    </dl>
+    <div class="fiber-toolbar">
+      <dl class="fiber-metrics">
+        <div><dt>current / DOM 计数</dt><dd>{{ currentCount }}</dd></div>
+        <div><dt>pending 队列</dt><dd>{{ pendingCount }} 次 +1</dd></div>
+        <div><dt>候选目标</dt><dd>{{ targetCount }}</dd></div>
+        <div><dt>工作进度</dt><dd>{{ isCommitted ? '已提交' : `${processed} / ${units.length}` }}{{ isPaused ? ' · 已暂停' : '' }}</dd></div>
+      </dl>
+      <div class="walkthrough-controls fiber-controls" role="group" aria-label="控制 Fiber 推演">
+        <button type="button" :disabled="!canAdvance" @click="advance">处理下一个 Fiber</button>
+        <button type="button" :disabled="!canAdvance || isPaused" @click="yieldWork">让出主线程</button>
+        <button type="button" @click="enqueueAndRestart">追加更新并重启</button>
+        <button type="button" :disabled="!canCommit" @click="commit">commit · 发布 DOM</button>
+        <button type="button" @click="reset">重置</button>
+      </div>
+    </div>
     <div class="fiber-board">
-      <article class="fiber-tree" aria-label="current 已提交树">
+      <article class="fiber-tree fiber-tree-current" aria-label="current 已提交树">
         <h3>current · 已提交完整树</h3>
         <p class="fiber-tree-caption">render 和让出期间不变，只有 commit 才发布新值。</p>
         <ol class="fiber-nodes">
@@ -131,12 +140,5 @@ function reset() {
       </article>
     </div>
     <p class="fiber-status" role="status" aria-live="polite" aria-atomic="true">{{ notice }}</p>
-    <div class="walkthrough-controls fiber-controls" role="group" aria-label="控制 Fiber 推演">
-      <button type="button" :disabled="!canAdvance" @click="advance">处理下一个 Fiber</button>
-      <button type="button" :disabled="!canAdvance || isPaused" @click="yieldWork">让出主线程</button>
-      <button type="button" @click="enqueueAndRestart">追加更新并重启</button>
-      <button type="button" :disabled="!canCommit" @click="commit">commit · 发布 DOM</button>
-      <button type="button" @click="reset">重置</button>
-    </div>
   </section>
 </template>

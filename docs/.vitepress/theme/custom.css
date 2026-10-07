@@ -68,10 +68,13 @@
 .fiber-metrics dd { margin: 2px 0 0; font-size: 16px; font-weight: 600; }
 .fiber-status, .fiber-empty { font-size: 14px; color: var(--vp-c-text-2); }
 .fiber-status { padding: 0 20px; min-height: 3.6em; }
-.fiber-controls { flex-wrap: wrap; justify-content: flex-start; gap: 8px; }
+.fiber-controls { flex-wrap: wrap; justify-content: flex-start; gap: 8px; border-top: 0; border-bottom: 1px solid var(--vp-c-divider); }
 @media (max-width: 640px) {
   .fiber-board { grid-template-columns: minmax(0, 1fr); gap: 16px; padding: 16px; }
   .fiber-tree { display: block; grid-row: auto; }
+  /* 移动端用工具栏的 current 数值作摘要，把屏幕空间留给候选工作。 */
+  .fiber-tree-current { display: none; }
+  .fiber-metrics { margin-inline: 16px; }
   .fiber-controls { padding-inline: 16px; }
 }
 @media (max-width: 480px) {
