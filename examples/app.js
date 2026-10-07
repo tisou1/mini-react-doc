@@ -120,17 +120,40 @@ const LazyLesson = lazy(() => new Promise(resolve => {
 function AsyncAndPortal() {
   const [loaded, setLoaded] = useState(false);
   const [modal, setModal] = useState(false);
+  const openButton = useRef(null);
   const closeButton = useRef(null);
-  useLayoutEffect(() => { if (modal) closeButton.current?.focus(); }, [modal]);
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!modal) return;
-    const onKeyDown = event => { if (event.key === 'Escape') setModal(false); };
+    // Portal 在 #root 外：只禁用背景容器，不会连弹窗一起变成 inert。
+    const background = document.getElementById('root');
+    const wasInert = background.inert;
+    const previousOverflow = document.body.style.overflow;
+    const opener = openButton.current;
+    background.inert = true;
+    document.body.style.overflow = 'hidden';
+    closeButton.current?.focus();
+    const onKeyDown = event => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        setModal(false);
+      } else if (event.key === 'Tab') {
+        // 此弹窗只有一个可聚焦控件，Tab / Shift+Tab 都回到关闭按钮。
+        event.preventDefault();
+        closeButton.current?.focus();
+      }
+    };
     document.addEventListener('keydown', onKeyDown);
-    return () => document.removeEventListener('keydown', onKeyDown);
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      background.inert = wasInert;
+      document.body.style.overflow = previousOverflow;
+      // layout cleanup 与关闭提交同步完成，避免焦点落到已删除按钮或 body。
+      if (opener?.isConnected) opener.focus({ preventScroll: true });
+    };
   }, [modal]);
   return panel('06 / lazy、Suspense 与 Portal', 'lazy 抛出 Promise，Suspense 提交 fallback；Portal 将 DOM 放进另一个容器。',
     h('div', { className: 'actions' }, button('加载学习卡片', () => setLoaded(true), { disabled: loaded }),
-      button('打开 Portal', () => setModal(true))),
+      button('打开 Portal', () => setModal(true), { ref: openButton })),
     loaded ? h(Suspense, { fallback: h('p', { role: 'status' }, '正在加载模块…') }, h(LazyLesson)) : null,
     modal ? createPortal(h('div', { className: 'overlay', onClick: event => {
       if (event.target === event.currentTarget) setModal(false);

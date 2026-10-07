@@ -234,3 +234,17 @@ StrictMode 可以作为透传容器使用，暂不模拟开发期双执行。
 - 展示：首页加入 Fiber 手动推演，可逐单元执行、保留进度让出、追加更新重启、整树完成后提交和重置。current 与 work 分列，屏幕计数只在 commit 发布；明确教学占位和手动提交与真实源码的差别。导航、完整教材、源码页和 README 同步加入专题入口，AGENTS.md 记录维护要求。
 - 验证：实际浏览核对 11 个 React 官方源码文件并完成只读技术审查；10 组围栏、8 个站内链接与 4 个锚点通过。Vue SFC/script setup/client/SSR 编译及针对性的状态推进检查通过；`pnpm check` 通过（32 个 JS 文件、5 个公共入口）。新增页面和组件后的 `pnpm docs:build` 通过，产物检查确认专题、4 个锚点、首页 14 个树节点/控制按钮及复制的示例/源码存在。未执行浏览器行为、视觉或 E2E 检查。
 - 提交：`docs: explain modern Fiber architecture with interactive walkthrough`（jj）。
+
+## UI 审查修复（2026-10-07）
+
+- [x] Portal 弹窗保持键盘焦点，关闭后返回触发按钮。
+- [ ] Fiber 桌面双列说明和节点起点对齐。
+- [ ] 移动端压缩 current 展示，将计数、进度和操作集中。
+- [ ] 提升示例辅助文字和页脚对比度。
+
+### 28 · Portal 弹窗焦点与清理
+
+- 完成：打开 Portal 时聚焦关闭按钮，Tab/Shift+Tab 在当前单控件弹窗内循环；背景 #root 设置 inert 并暂停 body 滚动。Escape、关闭按钮和遮罩均可关闭，layout cleanup 恢复原 inert/overflow 并把焦点返回触发按钮。
+- 原理：焦点管理和背景修改在 layout 阶段执行，资源与监听在对应 cleanup 撤销；Portal 位于背景容器之外，不受其 inert 影响。保留原页面状态，不改核心 renderer 或 Hooks。
+- 验证：`node --check examples/app.js` 通过。本机 Chrome 针对性检查实际覆盖初始焦点、Tab/Shift+Tab 循环、inert/滚动锁、三种关闭方式的焦点恢复与监听清理，全部通过；未增加测试依赖或执行全量测试。
+- 提交：`fix: keep Portal dialog focus and restore its trigger`（jj）。
