@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "packageManager": "pnpm@11.27.0",
   "description": "用于学习 React 原理的零依赖实现",
   "engines": {
     "node": ">=22"
